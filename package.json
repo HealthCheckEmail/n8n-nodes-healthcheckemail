@@ -1,0 +1,58 @@
+{
+  "name": "n8n-nodes-healthcheckemail",
+  "version": "1.0.0",
+  "description": "n8n community node for HealthCheckEmail: OAuth account connection and 18 workflow operations.",
+  "license": "MIT",
+  "homepage": "https://healthcheckemail.com",
+  "keywords": [
+    "n8n-community-node-package",
+    "n8n",
+    "healthcheckemail",
+    "oauth",
+    "automation"
+  ],
+  "author": {
+    "name": "HealthCheckEmail",
+    "url": "https://healthcheckemail.com",
+    "email": "codex@users.noreply.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HealthCheckEmail/n8n-nodes-healthcheckemail.git"
+  },
+  "bugs": {
+    "url": "https://github.com/HealthCheckEmail/n8n-nodes-healthcheckemail/issues"
+  },
+  "scripts": {
+    "build": "n8n-node build",
+    "dev": "n8n-node dev",
+    "lint": "n8n-node lint",
+    "lint:fix": "n8n-node lint --fix",
+    "test": "npm run build && node --test tests/*.test.cjs",
+    "prepublishOnly": "npm run lint && npm test"
+  },
+  "files": [
+    "dist",
+    "examples"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "strict": true,
+    "credentials": [
+      "dist/credentials/HealthCheckEmailOAuth2Api.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/HealthCheckEmail/Healthcheckemail.node.js"
+    ]
+  },
+  "devDependencies": {
+    "@n8n/node-cli": "0.49.1",
+    "typescript": "5.9.2",
+    "eslint": "9.32.0",
+    "prettier": "3.6.2",
+    "@types/node": "22.19.15"
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  }
+}
