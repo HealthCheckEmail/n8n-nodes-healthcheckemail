@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-healthcheckemail",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "n8n community node for HealthCheckEmail: OAuth account connection and 18 workflow operations.",
   "license": "MIT",
   "homepage": "https://healthcheckemail.com",
@@ -14,7 +14,7 @@
   "author": {
     "name": "HealthCheckEmail",
     "url": "https://healthcheckemail.com",
-    "email": "codex@users.noreply.github.com"
+    "email": "saeedmshdi@gmail.com"
   },
   "repository": {
     "type": "git",
