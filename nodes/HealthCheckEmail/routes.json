@@ -1,0 +1,74 @@
+{
+  "list_domains": {
+    "method": "GET",
+    "path": "/v1/domains"
+  },
+  "add_domain": {
+    "method": "POST",
+    "path": "/v1/domains"
+  },
+  "get_domain": {
+    "method": "GET",
+    "path": "/v1/domains/:domainId"
+  },
+  "verify_domain": {
+    "method": "POST",
+    "path": "/v1/domains/:domainId/verify"
+  },
+  "get_domain_health": {
+    "method": "GET",
+    "path": "/v1/domains/:domainId/summary"
+  },
+  "get_domain_diagnostics": {
+    "method": "GET",
+    "path": "/v1/domains/:domainId/diagnostics"
+  },
+  "get_enforcement_readiness": {
+    "method": "GET",
+    "path": "/v1/domains/:domainId/readiness"
+  },
+  "get_email_infrastructure": {
+    "method": "GET",
+    "path": "/v1/domains/:domainId/infrastructure"
+  },
+  "enable_public_status": {
+    "method": "POST",
+    "path": "/v1/domains/:domainId/public-status"
+  },
+  "disable_public_status": {
+    "method": "DELETE",
+    "path": "/v1/domains/:domainId/public-status"
+  },
+  "list_alerts": {
+    "method": "GET",
+    "path": "/v1/domains/:domainId/alerts"
+  },
+  "create_alert": {
+    "method": "POST",
+    "path": "/v1/domains/:domainId/alerts"
+  },
+  "update_alert": {
+    "method": "PATCH",
+    "path": "/v1/domains/:domainId/alerts/:alertId"
+  },
+  "delete_alert": {
+    "method": "DELETE",
+    "path": "/v1/domains/:domainId/alerts/:alertId"
+  },
+  "test_alert": {
+    "method": "POST",
+    "path": "/v1/domains/:domainId/alerts/:alertId/test"
+  },
+  "list_team_members": {
+    "method": "GET",
+    "path": "/v1/team"
+  },
+  "invite_team_member": {
+    "method": "POST",
+    "path": "/v1/team"
+  },
+  "remove_team_member": {
+    "method": "DELETE",
+    "path": "/v1/team/:memberId"
+  }
+}
