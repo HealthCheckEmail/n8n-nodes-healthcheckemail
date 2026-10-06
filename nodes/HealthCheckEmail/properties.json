@@ -1,16 +1,31 @@
 [
   {
+    "displayName": "Resource",
+    "name": "resource",
+    "type": "options",
+    "noDataExpression": true,
+    "options": [
+      {
+        "name": "Alert",
+        "value": "alert"
+      },
+      {
+        "name": "Domain",
+        "value": "domains"
+      },
+      {
+        "name": "Team Member",
+        "value": "team"
+      }
+    ],
+    "default": "domains"
+  },
+  {
     "displayName": "Operation",
     "name": "operation",
     "type": "options",
     "noDataExpression": true,
     "options": [
-      {
-        "name": "Add Domain",
-        "value": "add_domain",
-        "description": "Add a domain to HealthCheckEmail monitoring. Returns its DMARC reporting address and the exact suggested DNS record",
-        "action": "Add Domain in HealthCheckEmail"
-      },
       {
         "name": "Create Alert",
         "value": "create_alert",
@@ -22,6 +37,46 @@
         "value": "delete_alert",
         "description": "Permanently delete an alert from a monitored domain",
         "action": "Delete Alert in HealthCheckEmail"
+      },
+      {
+        "name": "List Alerts",
+        "value": "list_alerts",
+        "description": "List configured email, webhook, and Slack alerts for a monitored domain",
+        "action": "List Alerts in HealthCheckEmail"
+      },
+      {
+        "name": "Test Alert",
+        "value": "test_alert",
+        "description": "Send a synthetic test notification through an existing alert channel",
+        "action": "Test Alert in HealthCheckEmail"
+      },
+      {
+        "name": "Update Alert",
+        "value": "update_alert",
+        "description": "Update an alert's target, event rules, label, or enabled state",
+        "action": "Update Alert in HealthCheckEmail"
+      }
+    ],
+    "default": "create_alert",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "alert"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Operation",
+    "name": "operation",
+    "type": "options",
+    "noDataExpression": true,
+    "options": [
+      {
+        "name": "Add Domain",
+        "value": "add_domain",
+        "description": "Add a domain to HealthCheckEmail monitoring. Returns its DMARC reporting address and the exact suggested DNS record",
+        "action": "Add Domain in HealthCheckEmail"
       },
       {
         "name": "Disable Public Status",
@@ -66,22 +121,38 @@
         "action": "Get Enforcement Readiness in HealthCheckEmail"
       },
       {
-        "name": "Invite Team Member",
-        "value": "invite_team_member",
-        "description": "Invite a person to this HealthCheckEmail account. Only account owners can invite members or other owners",
-        "action": "Invite Team Member in HealthCheckEmail"
-      },
-      {
-        "name": "List Alerts",
-        "value": "list_alerts",
-        "description": "List configured email, webhook, and Slack alerts for a monitored domain",
-        "action": "List Alerts in HealthCheckEmail"
-      },
-      {
         "name": "List Domains",
         "value": "list_domains",
         "description": "List all domains monitored by this HealthCheckEmail account, including setup status and public status URLs",
         "action": "List Domains in HealthCheckEmail"
+      },
+      {
+        "name": "Verify Domain",
+        "value": "verify_domain",
+        "description": "Check live DNS for the domain's DMARC record and verify that reports are routed to HealthCheckEmail. Returns actionable failure details when setup is incomplete",
+        "action": "Verify Domain in HealthCheckEmail"
+      }
+    ],
+    "default": "list_domains",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "domains"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Operation",
+    "name": "operation",
+    "type": "options",
+    "noDataExpression": true,
+    "options": [
+      {
+        "name": "Invite Team Member",
+        "value": "invite_team_member",
+        "description": "Invite a person to this HealthCheckEmail account. Only account owners can invite members or other owners",
+        "action": "Invite Team Member in HealthCheckEmail"
       },
       {
         "name": "List Team Members",
@@ -94,27 +165,16 @@
         "value": "remove_team_member",
         "description": "Remove a person from this HealthCheckEmail account. Only account owners can remove members",
         "action": "Remove Team Member in HealthCheckEmail"
-      },
-      {
-        "name": "Test Alert",
-        "value": "test_alert",
-        "description": "Send a synthetic test notification through an existing alert channel",
-        "action": "Test Alert in HealthCheckEmail"
-      },
-      {
-        "name": "Update Alert",
-        "value": "update_alert",
-        "description": "Update an alert's target, event rules, label, or enabled state",
-        "action": "Update Alert in HealthCheckEmail"
-      },
-      {
-        "name": "Verify Domain",
-        "value": "verify_domain",
-        "description": "Check live DNS for the domain's DMARC record and verify that reports are routed to HealthCheckEmail. Returns actionable failure details when setup is incomplete",
-        "action": "Verify Domain in HealthCheckEmail"
       }
     ],
-    "default": "list_domains"
+    "default": "invite_team_member",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "team"
+        ]
+      }
+    }
   },
   {
     "displayName": "This operation changes data or may use account credits. Review the inputs and the product permissions before running this workflow.",
@@ -134,6 +194,11 @@
           "test_alert",
           "update_alert",
           "verify_domain"
+        ],
+        "resource": [
+          "alert",
+          "domains",
+          "team"
         ]
       }
     }
@@ -157,6 +222,11 @@
           "test_alert",
           "update_alert",
           "verify_domain"
+        ],
+        "resource": [
+          "alert",
+          "domains",
+          "team"
         ]
       }
     }
@@ -172,6 +242,9 @@
       "show": {
         "operation": [
           "add_domain"
+        ],
+        "resource": [
+          "domains"
         ]
       }
     }
@@ -187,6 +260,9 @@
       "show": {
         "operation": [
           "create_alert"
+        ],
+        "resource": [
+          "alert"
         ]
       }
     }
@@ -216,6 +292,9 @@
       "show": {
         "operation": [
           "create_alert"
+        ],
+        "resource": [
+          "alert"
         ]
       }
     }
@@ -231,6 +310,9 @@
       "show": {
         "operation": [
           "create_alert"
+        ],
+        "resource": [
+          "alert"
         ]
       }
     }
@@ -245,6 +327,9 @@
       "show": {
         "operation": [
           "create_alert"
+        ],
+        "resource": [
+          "alert"
         ]
       }
     },
@@ -276,6 +361,9 @@
       "show": {
         "operation": [
           "delete_alert"
+        ],
+        "resource": [
+          "alert"
         ]
       }
     }
@@ -291,6 +379,9 @@
       "show": {
         "operation": [
           "delete_alert"
+        ],
+        "resource": [
+          "alert"
         ]
       }
     }
@@ -306,6 +397,9 @@
       "show": {
         "operation": [
           "disable_public_status"
+        ],
+        "resource": [
+          "domains"
         ]
       }
     }
@@ -321,6 +415,9 @@
       "show": {
         "operation": [
           "enable_public_status"
+        ],
+        "resource": [
+          "domains"
         ]
       }
     }
@@ -336,6 +433,9 @@
       "show": {
         "operation": [
           "get_domain"
+        ],
+        "resource": [
+          "domains"
         ]
       }
     }
@@ -351,6 +451,9 @@
       "show": {
         "operation": [
           "get_domain_diagnostics"
+        ],
+        "resource": [
+          "domains"
         ]
       }
     }
@@ -365,6 +468,9 @@
       "show": {
         "operation": [
           "get_domain_diagnostics"
+        ],
+        "resource": [
+          "domains"
         ]
       }
     },
@@ -394,6 +500,9 @@
       "show": {
         "operation": [
           "get_domain_health"
+        ],
+        "resource": [
+          "domains"
         ]
       }
     }
@@ -409,6 +518,9 @@
       "show": {
         "operation": [
           "get_email_infrastructure"
+        ],
+        "resource": [
+          "domains"
         ]
       }
     }
@@ -424,6 +536,9 @@
       "show": {
         "operation": [
           "get_enforcement_readiness"
+        ],
+        "resource": [
+          "domains"
         ]
       }
     }
@@ -439,6 +554,9 @@
       "show": {
         "operation": [
           "invite_team_member"
+        ],
+        "resource": [
+          "team"
         ]
       }
     }
@@ -453,6 +571,9 @@
       "show": {
         "operation": [
           "invite_team_member"
+        ],
+        "resource": [
+          "team"
         ]
       }
     },
@@ -487,6 +608,9 @@
       "show": {
         "operation": [
           "list_alerts"
+        ],
+        "resource": [
+          "alert"
         ]
       }
     }
@@ -502,6 +626,9 @@
       "show": {
         "operation": [
           "remove_team_member"
+        ],
+        "resource": [
+          "team"
         ]
       }
     }
@@ -517,6 +644,9 @@
       "show": {
         "operation": [
           "test_alert"
+        ],
+        "resource": [
+          "alert"
         ]
       }
     }
@@ -532,6 +662,9 @@
       "show": {
         "operation": [
           "test_alert"
+        ],
+        "resource": [
+          "alert"
         ]
       }
     }
@@ -547,6 +680,9 @@
       "show": {
         "operation": [
           "update_alert"
+        ],
+        "resource": [
+          "alert"
         ]
       }
     }
@@ -562,6 +698,9 @@
       "show": {
         "operation": [
           "update_alert"
+        ],
+        "resource": [
+          "alert"
         ]
       }
     }
@@ -576,6 +715,9 @@
       "show": {
         "operation": [
           "update_alert"
+        ],
+        "resource": [
+          "alert"
         ]
       }
     },
@@ -621,6 +763,9 @@
       "show": {
         "operation": [
           "verify_domain"
+        ],
+        "resource": [
+          "domains"
         ]
       }
     }

@@ -3,7 +3,7 @@ import type {IHookFunctions,INodeType,INodeTypeDescription,IWebhookFunctions,IWe
 import {NodeConnectionTypes,NodeOperationError} from 'n8n-workflow';
 interface Hook {id:string;secret?:string;target?:string;url?:string;enabled?:boolean;status?:string}
 async function api(ctx:IHookFunctions,method:IHttpRequestMethods,path:string,body?:object):Promise<{alerts?:Hook[];webhooks?:Hook[];alert?:Hook;webhook?:Hook;signing_secret?:string}> {
- try {const response=await ctx.helpers.httpRequestWithAuthentication.call(ctx,'healthcheckemailOAuth2Api',{method,url:'https://mcp.healthcheckemail.com'+path,json:true,disableFollowRedirect:true,timeout:30000,...(body?{body}:{})});return response;}
+ try {const response=await ctx.helpers.httpRequestWithAuthentication.call(ctx,'healthcheckemailOAuth2Api',{method,url:'https://healthcheckemail.com'+path,json:true,disableFollowRedirect:true,timeout:30000,...(body?{body}:{})});return response;}
  catch {throw new NodeOperationError(ctx.getNode(),'Webhook registration failed. Check the connection, account permissions, plan, and selected resource.');}
 }
 export class HealthCheckEmailTrigger implements INodeType {

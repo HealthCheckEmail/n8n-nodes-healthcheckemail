@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-healthcheckemail",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Native HealthCheckEmail REST API integration for n8n workflows.",
   "license": "MIT",
   "homepage": "https://healthcheckemail.com",

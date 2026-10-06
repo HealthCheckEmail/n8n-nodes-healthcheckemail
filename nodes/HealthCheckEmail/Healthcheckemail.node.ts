@@ -33,7 +33,7 @@ export class Healthcheckemail implements INodeType {
   async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
     return executeOperations(
       this,
-      "https://mcp.healthcheckemail.com",
+      "https://healthcheckemail.com",
       "healthcheckemailOAuth2Api",
       operations as unknown as Operation[],
       routes as Record<string,ResourceRoute>,
