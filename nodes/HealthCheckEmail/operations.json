@@ -1,441 +1,384 @@
 [
-  {
-    "name": "add_domain",
-    "annotations": {
-      "readOnlyHint": false,
-      "destructiveHint": false,
-      "openWorldHint": true
-    },
-    "description": "Add a domain to HealthCheckEmail monitoring. Returns its DMARC reporting address and the exact suggested DNS record.",
-    "inputSchema": {
-      "type": "object",
-      "required": [
-        "domain"
-      ],
-      "properties": {
-        "domain": {
-          "type": "string",
-          "description": "A root domain such as example.com"
-        }
-      }
-    }
-  },
-  {
-    "name": "create_alert",
-    "annotations": {
-      "readOnlyHint": false,
-      "destructiveHint": false,
-      "openWorldHint": true
-    },
-    "description": "Create an email, HTTPS webhook, or Slack alert for email-health events. Generic webhooks return a signing secret.",
-    "inputSchema": {
-      "type": "object",
-      "required": [
-        "domainId",
-        "channel",
-        "target"
-      ],
-      "properties": {
-        "domainId": {
-          "type": "string"
-        },
-        "channel": {
-          "type": "string",
-          "enum": [
-            "email",
-            "webhook",
-            "slack"
-          ]
-        },
-        "target": {
-          "type": "string",
-          "description": "Email address or HTTPS webhook URL"
-        },
-        "label": {
-          "type": "string",
-          "maxLength": 120
-        },
-        "rules": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "dns_change",
-              "dmarc_multi",
-              "spike",
-              "dkim_weak_key"
-            ]
-          },
-          "minItems": 1
-        }
-      }
-    }
-  },
-  {
-    "name": "delete_alert",
-    "annotations": {
-      "readOnlyHint": false,
-      "destructiveHint": true,
-      "openWorldHint": false
-    },
-    "description": "Permanently delete an alert from a monitored domain.",
-    "inputSchema": {
-      "type": "object",
-      "required": [
-        "domainId",
-        "alertId"
-      ],
-      "properties": {
-        "domainId": {
-          "type": "string"
-        },
-        "alertId": {
-          "type": "string"
-        }
-      }
-    }
-  },
-  {
-    "name": "disable_public_status",
-    "annotations": {
-      "readOnlyHint": false,
-      "destructiveHint": true,
-      "openWorldHint": false
-    },
-    "description": "Disable a domain's public email-health status page and invalidate its public URL.",
-    "inputSchema": {
-      "type": "object",
-      "required": [
-        "domainId"
-      ],
-      "properties": {
-        "domainId": {
-          "type": "string",
-          "description": "Domain id returned by list_domains or add_domain"
-        }
-      }
-    }
-  },
-  {
-    "name": "enable_public_status",
-    "annotations": {
-      "readOnlyHint": false,
-      "destructiveHint": false,
-      "openWorldHint": true
-    },
-    "description": "Enable the shareable public email-health status page and badge for a domain. Returns the generated URLs.",
-    "inputSchema": {
-      "type": "object",
-      "required": [
-        "domainId"
-      ],
-      "properties": {
-        "domainId": {
-          "type": "string",
-          "description": "Domain id returned by list_domains or add_domain"
-        }
-      }
-    }
-  },
-  {
-    "name": "get_domain",
-    "annotations": {
-      "readOnlyHint": true,
-      "destructiveHint": false,
-      "openWorldHint": false
-    },
-    "description": "Get one monitored domain, its DMARC setup record, reporting state, and public status configuration.",
-    "inputSchema": {
-      "type": "object",
-      "required": [
-        "domainId"
-      ],
-      "properties": {
-        "domainId": {
-          "type": "string",
-          "description": "Domain id returned by list_domains or add_domain"
-        }
-      }
-    }
-  },
-  {
-    "name": "get_domain_diagnostics",
-    "annotations": {
-      "readOnlyHint": true,
-      "destructiveHint": false,
-      "openWorldHint": false
-    },
-    "description": "Analyze mail flow for a domain: daily pass/fail volume, report providers, subdomains, geography, sending sources, unknown senders, and DKIM selectors.",
-    "inputSchema": {
-      "type": "object",
-      "required": [
-        "domainId"
-      ],
-      "properties": {
-        "domainId": {
-          "type": "string"
-        },
-        "days": {
-          "type": "integer",
-          "minimum": 7,
-          "maximum": 365,
-          "default": 90
-        }
-      }
-    }
-  },
-  {
-    "name": "get_domain_health",
-    "annotations": {
-      "readOnlyHint": true,
-      "destructiveHint": false,
-      "openWorldHint": false
-    },
-    "description": "Get the latest email health grade, grade history, protected-message counters, compliance checks, recent events, and detected mail provider.",
-    "inputSchema": {
-      "type": "object",
-      "required": [
-        "domainId"
-      ],
-      "properties": {
-        "domainId": {
-          "type": "string",
-          "description": "Domain id returned by list_domains or add_domain"
-        }
-      }
-    }
-  },
-  {
-    "name": "get_email_infrastructure",
-    "annotations": {
-      "readOnlyHint": true,
-      "destructiveHint": false,
-      "openWorldHint": false
-    },
-    "description": "Get recent SPF, DKIM, DMARC, MX, BIMI, MTA-STS, and DNSSEC snapshots plus the detected mail provider.",
-    "inputSchema": {
-      "type": "object",
-      "required": [
-        "domainId"
-      ],
-      "properties": {
-        "domainId": {
-          "type": "string",
-          "description": "Domain id returned by list_domains or add_domain"
-        }
-      }
-    }
-  },
-  {
-    "name": "get_enforcement_readiness",
-    "annotations": {
-      "readOnlyHint": true,
-      "destructiveHint": false,
-      "openWorldHint": false
-    },
-    "description": "Simulate moving this domain to an enforcing DMARC policy and identify legitimate senders that would fail alignment.",
-    "inputSchema": {
-      "type": "object",
-      "required": [
-        "domainId"
-      ],
-      "properties": {
-        "domainId": {
-          "type": "string",
-          "description": "Domain id returned by list_domains or add_domain"
-        }
-      }
-    }
-  },
-  {
-    "name": "invite_team_member",
-    "annotations": {
-      "readOnlyHint": false,
-      "destructiveHint": true,
-      "openWorldHint": true
-    },
-    "description": "Invite a person to this HealthCheckEmail account. Only account owners can invite members or other owners.",
-    "inputSchema": {
-      "type": "object",
-      "required": [
-        "email"
-      ],
-      "properties": {
-        "email": {
-          "type": "string",
-          "format": "email"
-        },
-        "role": {
-          "type": "string",
-          "enum": [
-            "owner",
-            "member"
-          ],
-          "default": "member"
-        }
-      }
-    }
-  },
-  {
-    "name": "list_alerts",
-    "annotations": {
-      "readOnlyHint": true,
-      "destructiveHint": false,
-      "openWorldHint": false
-    },
-    "description": "List configured email, webhook, and Slack alerts for a monitored domain.",
-    "inputSchema": {
-      "type": "object",
-      "required": [
-        "domainId"
-      ],
-      "properties": {
-        "domainId": {
-          "type": "string",
-          "description": "Domain id returned by list_domains or add_domain"
-        }
-      }
-    }
-  },
-  {
-    "name": "list_domains",
-    "annotations": {
-      "readOnlyHint": true,
-      "destructiveHint": false,
-      "openWorldHint": false
-    },
-    "description": "List all domains monitored by this HealthCheckEmail account, including setup status and public status URLs.",
-    "inputSchema": {
-      "type": "object",
-      "properties": {}
-    }
-  },
-  {
-    "name": "list_team_members",
-    "annotations": {
-      "readOnlyHint": true,
-      "destructiveHint": false,
-      "openWorldHint": false
-    },
-    "description": "List people with access to this HealthCheckEmail account and their owner/member roles.",
-    "inputSchema": {
-      "type": "object",
-      "properties": {}
-    }
-  },
-  {
-    "name": "remove_team_member",
-    "annotations": {
-      "readOnlyHint": false,
-      "destructiveHint": true,
-      "openWorldHint": false
-    },
-    "description": "Remove a person from this HealthCheckEmail account. Only account owners can remove members.",
-    "inputSchema": {
-      "type": "object",
-      "required": [
-        "memberId"
-      ],
-      "properties": {
-        "memberId": {
-          "type": "string"
-        }
-      }
-    }
-  },
-  {
-    "name": "test_alert",
-    "annotations": {
-      "readOnlyHint": false,
-      "destructiveHint": true,
-      "openWorldHint": true
-    },
-    "description": "Send a synthetic test notification through an existing alert channel.",
-    "inputSchema": {
-      "type": "object",
-      "required": [
-        "domainId",
-        "alertId"
-      ],
-      "properties": {
-        "domainId": {
-          "type": "string"
-        },
-        "alertId": {
-          "type": "string"
-        }
-      }
-    }
-  },
-  {
-    "name": "update_alert",
-    "annotations": {
-      "readOnlyHint": false,
-      "destructiveHint": true,
-      "openWorldHint": true
-    },
-    "description": "Update an alert's target, event rules, label, or enabled state.",
-    "inputSchema": {
-      "type": "object",
-      "required": [
-        "domainId",
-        "alertId"
-      ],
-      "properties": {
-        "domainId": {
-          "type": "string"
-        },
-        "alertId": {
-          "type": "string"
-        },
-        "target": {
-          "type": "string"
-        },
-        "label": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "maxLength": 120
-        },
-        "enabled": {
-          "type": "boolean"
-        },
-        "rules": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "dns_change",
-              "dmarc_multi",
-              "spike",
-              "dkim_weak_key"
-            ]
-          },
-          "minItems": 1
-        }
-      }
-    }
-  },
-  {
-    "name": "verify_domain",
-    "annotations": {
-      "readOnlyHint": false,
-      "destructiveHint": false,
-      "openWorldHint": true
-    },
-    "description": "Check live DNS for the domain's DMARC record and verify that reports are routed to HealthCheckEmail. Returns actionable failure details when setup is incomplete.",
-    "inputSchema": {
-      "type": "object",
-      "required": [
-        "domainId"
-      ],
-      "properties": {
-        "domainId": {
-          "type": "string",
-          "description": "Domain id returned by list_domains or add_domain"
-        }
-      }
-    }
-  }
+	{
+		"name": "add_domain",
+		"annotations": {
+			"readOnlyHint": false,
+			"destructiveHint": false,
+			"openWorldHint": true
+		},
+		"description": "Add a domain to HealthCheckEmail monitoring. Returns its DMARC reporting address and the exact suggested DNS record.",
+		"inputSchema": {
+			"type": "object",
+			"required": ["domain"],
+			"properties": {
+				"domain": {
+					"type": "string",
+					"description": "A root domain such as example.com"
+				}
+			}
+		}
+	},
+	{
+		"name": "create_alert",
+		"annotations": {
+			"readOnlyHint": false,
+			"destructiveHint": false,
+			"openWorldHint": true
+		},
+		"description": "Create an email, HTTPS webhook, or Slack alert for email-health events. Generic webhooks return a signing secret.",
+		"inputSchema": {
+			"type": "object",
+			"required": ["domainId", "channel", "target"],
+			"properties": {
+				"domainId": {
+					"type": "string"
+				},
+				"channel": {
+					"type": "string",
+					"enum": ["email", "webhook", "slack"]
+				},
+				"target": {
+					"type": "string",
+					"description": "Email address or HTTPS webhook URL"
+				},
+				"label": {
+					"type": "string",
+					"maxLength": 120
+				},
+				"rules": {
+					"type": "array",
+					"items": {
+						"type": "string",
+						"enum": ["dns_change", "dmarc_multi", "spike", "dkim_weak_key"]
+					},
+					"minItems": 1
+				}
+			}
+		}
+	},
+	{
+		"name": "delete_alert",
+		"annotations": {
+			"readOnlyHint": false,
+			"destructiveHint": true,
+			"openWorldHint": false
+		},
+		"description": "Permanently delete an alert from a monitored domain.",
+		"inputSchema": {
+			"type": "object",
+			"required": ["domainId", "alertId"],
+			"properties": {
+				"domainId": {
+					"type": "string"
+				},
+				"alertId": {
+					"type": "string"
+				}
+			}
+		}
+	},
+	{
+		"name": "disable_public_status",
+		"annotations": {
+			"readOnlyHint": false,
+			"destructiveHint": true,
+			"openWorldHint": false
+		},
+		"description": "Disable a domain's public email-health status page and invalidate its public URL.",
+		"inputSchema": {
+			"type": "object",
+			"required": ["domainId"],
+			"properties": {
+				"domainId": {
+					"type": "string",
+					"description": "Domain id returned by list_domains or add_domain"
+				}
+			}
+		}
+	},
+	{
+		"name": "enable_public_status",
+		"annotations": {
+			"readOnlyHint": false,
+			"destructiveHint": false,
+			"openWorldHint": true
+		},
+		"description": "Enable the shareable public email-health status page and badge for a domain. Returns the generated URLs.",
+		"inputSchema": {
+			"type": "object",
+			"required": ["domainId"],
+			"properties": {
+				"domainId": {
+					"type": "string",
+					"description": "Domain id returned by list_domains or add_domain"
+				}
+			}
+		}
+	},
+	{
+		"name": "get_domain",
+		"annotations": {
+			"readOnlyHint": true,
+			"destructiveHint": false,
+			"openWorldHint": false
+		},
+		"description": "Get one monitored domain, its DMARC setup record, reporting state, and public status configuration.",
+		"inputSchema": {
+			"type": "object",
+			"required": ["domainId"],
+			"properties": {
+				"domainId": {
+					"type": "string",
+					"description": "Domain id returned by list_domains or add_domain"
+				}
+			}
+		}
+	},
+	{
+		"name": "get_domain_diagnostics",
+		"annotations": {
+			"readOnlyHint": true,
+			"destructiveHint": false,
+			"openWorldHint": false
+		},
+		"description": "Analyze mail flow for a domain: daily pass/fail volume, report providers, subdomains, geography, sending sources, unknown senders, and DKIM selectors.",
+		"inputSchema": {
+			"type": "object",
+			"required": ["domainId"],
+			"properties": {
+				"domainId": {
+					"type": "string"
+				},
+				"days": {
+					"type": "integer",
+					"minimum": 7,
+					"maximum": 365,
+					"default": 90
+				}
+			}
+		}
+	},
+	{
+		"name": "get_domain_health",
+		"annotations": {
+			"readOnlyHint": true,
+			"destructiveHint": false,
+			"openWorldHint": false
+		},
+		"description": "Get the latest email health grade, grade history, protected-message counters, compliance checks, recent events, and detected mail provider.",
+		"inputSchema": {
+			"type": "object",
+			"required": ["domainId"],
+			"properties": {
+				"domainId": {
+					"type": "string",
+					"description": "Domain id returned by list_domains or add_domain"
+				}
+			}
+		}
+	},
+	{
+		"name": "get_email_infrastructure",
+		"annotations": {
+			"readOnlyHint": true,
+			"destructiveHint": false,
+			"openWorldHint": false
+		},
+		"description": "Get recent SPF, DKIM, DMARC, MX, BIMI, MTA-STS, and DNSSEC snapshots plus the detected mail provider.",
+		"inputSchema": {
+			"type": "object",
+			"required": ["domainId"],
+			"properties": {
+				"domainId": {
+					"type": "string",
+					"description": "Domain id returned by list_domains or add_domain"
+				}
+			}
+		}
+	},
+	{
+		"name": "get_enforcement_readiness",
+		"annotations": {
+			"readOnlyHint": true,
+			"destructiveHint": false,
+			"openWorldHint": false
+		},
+		"description": "Simulate moving this domain to an enforcing DMARC policy and identify legitimate senders that would fail alignment.",
+		"inputSchema": {
+			"type": "object",
+			"required": ["domainId"],
+			"properties": {
+				"domainId": {
+					"type": "string",
+					"description": "Domain id returned by list_domains or add_domain"
+				}
+			}
+		}
+	},
+	{
+		"name": "invite_team_member",
+		"annotations": {
+			"readOnlyHint": false,
+			"destructiveHint": true,
+			"openWorldHint": true
+		},
+		"description": "Invite a person to this HealthCheckEmail account. Only account owners can invite members or other owners.",
+		"inputSchema": {
+			"type": "object",
+			"required": ["email"],
+			"properties": {
+				"email": {
+					"type": "string",
+					"format": "email"
+				},
+				"role": {
+					"type": "string",
+					"enum": ["owner", "member"],
+					"default": "member"
+				}
+			}
+		}
+	},
+	{
+		"name": "list_alerts",
+		"annotations": {
+			"readOnlyHint": true,
+			"destructiveHint": false,
+			"openWorldHint": false
+		},
+		"description": "List configured email, webhook, and Slack alerts for a monitored domain.",
+		"inputSchema": {
+			"type": "object",
+			"required": ["domainId"],
+			"properties": {
+				"domainId": {
+					"type": "string",
+					"description": "Domain id returned by list_domains or add_domain"
+				}
+			}
+		}
+	},
+	{
+		"name": "list_domains",
+		"annotations": {
+			"readOnlyHint": true,
+			"destructiveHint": false,
+			"openWorldHint": false
+		},
+		"description": "List all domains monitored by this HealthCheckEmail account, including setup status and public status URLs.",
+		"inputSchema": {
+			"type": "object",
+			"properties": {}
+		}
+	},
+	{
+		"name": "list_team_members",
+		"annotations": {
+			"readOnlyHint": true,
+			"destructiveHint": false,
+			"openWorldHint": false
+		},
+		"description": "List people with access to this HealthCheckEmail account and their owner/member roles.",
+		"inputSchema": {
+			"type": "object",
+			"properties": {}
+		}
+	},
+	{
+		"name": "remove_team_member",
+		"annotations": {
+			"readOnlyHint": false,
+			"destructiveHint": true,
+			"openWorldHint": false
+		},
+		"description": "Remove a person from this HealthCheckEmail account. Only account owners can remove members.",
+		"inputSchema": {
+			"type": "object",
+			"required": ["memberId"],
+			"properties": {
+				"memberId": {
+					"type": "string"
+				}
+			}
+		}
+	},
+	{
+		"name": "test_alert",
+		"annotations": {
+			"readOnlyHint": false,
+			"destructiveHint": true,
+			"openWorldHint": true
+		},
+		"description": "Send a synthetic test notification through an existing alert channel.",
+		"inputSchema": {
+			"type": "object",
+			"required": ["domainId", "alertId"],
+			"properties": {
+				"domainId": {
+					"type": "string"
+				},
+				"alertId": {
+					"type": "string"
+				}
+			}
+		}
+	},
+	{
+		"name": "update_alert",
+		"annotations": {
+			"readOnlyHint": false,
+			"destructiveHint": true,
+			"openWorldHint": true
+		},
+		"description": "Update an alert's target, event rules, label, or enabled state.",
+		"inputSchema": {
+			"type": "object",
+			"required": ["domainId", "alertId"],
+			"properties": {
+				"domainId": {
+					"type": "string"
+				},
+				"alertId": {
+					"type": "string"
+				},
+				"target": {
+					"type": "string"
+				},
+				"label": {
+					"type": ["string", "null"],
+					"maxLength": 120
+				},
+				"enabled": {
+					"type": "boolean"
+				},
+				"rules": {
+					"type": "array",
+					"items": {
+						"type": "string",
+						"enum": ["dns_change", "dmarc_multi", "spike", "dkim_weak_key"]
+					},
+					"minItems": 1
+				}
+			}
+		}
+	},
+	{
+		"name": "verify_domain",
+		"annotations": {
+			"readOnlyHint": false,
+			"destructiveHint": false,
+			"openWorldHint": true
+		},
+		"description": "Check live DNS for the domain's DMARC record and verify that reports are routed to HealthCheckEmail. Returns actionable failure details when setup is incomplete.",
+		"inputSchema": {
+			"type": "object",
+			"required": ["domainId"],
+			"properties": {
+				"domainId": {
+					"type": "string",
+					"description": "Domain id returned by list_domains or add_domain"
+				}
+			}
+		}
+	}
 ]

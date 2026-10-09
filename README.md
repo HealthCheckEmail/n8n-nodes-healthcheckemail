@@ -18,26 +18,26 @@ Choose a **Resource**, then an **Operation**. Only operations and input fields f
 
 ### Requests
 
-| Operation | HTTP request |
-| --- | --- |
-| add_domain | `POST /v1/domains` |
-| create_alert | `POST /v1/domains/:domainId/alerts` |
-| delete_alert | `DELETE /v1/domains/:domainId/alerts/:alertId` |
-| disable_public_status | `DELETE /v1/domains/:domainId/public-status` |
-| enable_public_status | `POST /v1/domains/:domainId/public-status` |
-| get_domain | `GET /v1/domains/:domainId` |
-| get_domain_diagnostics | `GET /v1/domains/:domainId/diagnostics` |
-| get_domain_health | `GET /v1/domains/:domainId/summary` |
-| get_email_infrastructure | `GET /v1/domains/:domainId/infrastructure` |
-| get_enforcement_readiness | `GET /v1/domains/:domainId/readiness` |
-| invite_team_member | `POST /v1/team` |
-| list_alerts | `GET /v1/domains/:domainId/alerts` |
-| list_domains | `GET /v1/domains` |
-| list_team_members | `GET /v1/team` |
-| remove_team_member | `DELETE /v1/team/:memberId` |
-| test_alert | `POST /v1/domains/:domainId/alerts/:alertId/test` |
-| update_alert | `PATCH /v1/domains/:domainId/alerts/:alertId` |
-| verify_domain | `POST /v1/domains/:domainId/verify` |
+| Operation                 | HTTP request                                      |
+| ------------------------- | ------------------------------------------------- |
+| add_domain                | `POST /v1/domains`                                |
+| create_alert              | `POST /v1/domains/:domainId/alerts`               |
+| delete_alert              | `DELETE /v1/domains/:domainId/alerts/:alertId`    |
+| disable_public_status     | `DELETE /v1/domains/:domainId/public-status`      |
+| enable_public_status      | `POST /v1/domains/:domainId/public-status`        |
+| get_domain                | `GET /v1/domains/:domainId`                       |
+| get_domain_diagnostics    | `GET /v1/domains/:domainId/diagnostics`           |
+| get_domain_health         | `GET /v1/domains/:domainId/summary`               |
+| get_email_infrastructure  | `GET /v1/domains/:domainId/infrastructure`        |
+| get_enforcement_readiness | `GET /v1/domains/:domainId/readiness`             |
+| invite_team_member        | `POST /v1/team`                                   |
+| list_alerts               | `GET /v1/domains/:domainId/alerts`                |
+| list_domains              | `GET /v1/domains`                                 |
+| list_team_members         | `GET /v1/team`                                    |
+| remove_team_member        | `DELETE /v1/team/:memberId`                       |
+| test_alert                | `POST /v1/domains/:domainId/alerts/:alertId/test` |
+| update_alert              | `PATCH /v1/domains/:domainId/alerts/:alertId`     |
+| verify_domain             | `POST /v1/domains/:domainId/verify`               |
 
 ## Signed webhook trigger
 
@@ -62,3 +62,9 @@ MIT license.
 ## REST API contract
 
 The request origin and OAuth resource are the product API shown above. GET reads a resource, POST creates or requests an explicitly confirmed action, PATCH updates, and DELETE removes the selected owned resource. The node does not forward requests to a protocol server. Authentication, permissions and ownership are enforced before the API executes an operation.
+
+## Release checks (3.1.0)
+
+Resource and Operation definitions are explicit in the TypeScript node source. This minor update preserves API endpoints, credential types and operation identifiers. Every publication must pass Prettier, the official n8n node CLI linter with zero warnings, the runtime tests, and the n8n community package scanner against both TypeScript source and compiled JavaScript. GitHub Actions runs these checks before publishing with npm provenance.
+
+Run `npm ci --ignore-scripts`, `npm test`, and `npm run review` before proposing a release.

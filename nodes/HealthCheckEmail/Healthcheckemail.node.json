@@ -1,20 +1,18 @@
 {
-  "node": "n8n-nodes-healthcheckemail.healthcheckemail",
-  "nodeVersion": "1.0",
-  "codexVersion": "1.0",
-  "categories": [
-    "Productivity"
-  ],
-  "resources": {
-    "credentialDocumentation": [
-      {
-        "url": "https://github.com/HealthCheckEmail/n8n-nodes-healthcheckemail#authentication"
-      }
-    ],
-    "primaryDocumentation": [
-      {
-        "url": "https://github.com/HealthCheckEmail/n8n-nodes-healthcheckemail#readme"
-      }
-    ]
-  }
+	"node": "n8n-nodes-healthcheckemail.healthcheckemail",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Productivity"],
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://github.com/HealthCheckEmail/n8n-nodes-healthcheckemail#authentication"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://github.com/HealthCheckEmail/n8n-nodes-healthcheckemail#readme"
+			}
+		]
+	}
 }
