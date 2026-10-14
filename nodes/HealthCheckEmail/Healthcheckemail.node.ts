@@ -21,11 +21,18 @@ export class Healthcheckemail implements INodeType {
 		version: 1,
 		subtitle: '={{$parameter["resource"] + ": " + $parameter["operation"]}}',
 		description: 'Automate your HealthCheckEmail account',
-		defaults: { name: 'HealthCheckEmail' },
+		defaults: {
+			name: 'HealthCheckEmail',
+		},
 		inputs: [NodeConnectionTypes.Main],
 		outputs: [NodeConnectionTypes.Main],
 		usableAsTool: true,
-		credentials: [{ name: 'healthcheckemailOAuth2Api', required: true }],
+		credentials: [
+			{
+				name: 'healthcheckemailOAuth2Api',
+				required: true,
+			},
+		],
 		properties: [
 			{
 				displayName: 'Resource',
@@ -209,55 +216,6 @@ export class Healthcheckemail implements INodeType {
 				displayOptions: {
 					show: {
 						resource: ['team'],
-					},
-				},
-			},
-			{
-				displayName:
-					'This operation changes data or may use account credits. Review the inputs and the product permissions before running this workflow.',
-				name: 'writeNotice',
-				type: 'notice',
-				default: '',
-				displayOptions: {
-					show: {
-						operation: [
-							'add_domain',
-							'create_alert',
-							'delete_alert',
-							'disable_public_status',
-							'enable_public_status',
-							'invite_team_member',
-							'remove_team_member',
-							'test_alert',
-							'update_alert',
-							'verify_domain',
-						],
-						resource: ['alert', 'domains', 'team'],
-					},
-				},
-			},
-			{
-				displayName: 'Confirm Write Operation',
-				name: 'confirmWrite',
-				type: 'boolean',
-				default: false,
-				description:
-					'Whether you authorize this workflow to run the selected write operation, including any applicable product credits',
-				displayOptions: {
-					show: {
-						operation: [
-							'add_domain',
-							'create_alert',
-							'delete_alert',
-							'disable_public_status',
-							'enable_public_status',
-							'invite_team_member',
-							'remove_team_member',
-							'test_alert',
-							'update_alert',
-							'verify_domain',
-						],
-						resource: ['alert', 'domains', 'team'],
 					},
 				},
 			},
@@ -700,8 +658,102 @@ export class Healthcheckemail implements INodeType {
 					},
 				},
 			},
+			{
+				displayName: 'Return All',
+				name: 'returnAll',
+				type: 'boolean',
+				default: false,
+				description: 'Whether to return all results or only up to a given limit',
+				displayOptions: {
+					show: {
+						operation: ['list_domains'],
+						resource: ['domains'],
+					},
+				},
+			},
+			{
+				displayName: 'Limit',
+				name: 'limit',
+				type: 'number',
+				default: 50,
+				typeOptions: {
+					minValue: 1,
+					numberPrecision: 0,
+				},
+				description: 'Max number of results to return',
+				displayOptions: {
+					show: {
+						operation: ['list_domains'],
+						resource: ['domains'],
+						returnAll: [false],
+					},
+				},
+			},
+			{
+				displayName: 'Return All',
+				name: 'returnAll',
+				type: 'boolean',
+				default: false,
+				description: 'Whether to return all results or only up to a given limit',
+				displayOptions: {
+					show: {
+						operation: ['list_alerts'],
+						resource: ['alert'],
+					},
+				},
+			},
+			{
+				displayName: 'Limit',
+				name: 'limit',
+				type: 'number',
+				default: 50,
+				typeOptions: {
+					minValue: 1,
+					numberPrecision: 0,
+				},
+				description: 'Max number of results to return',
+				displayOptions: {
+					show: {
+						operation: ['list_alerts'],
+						resource: ['alert'],
+						returnAll: [false],
+					},
+				},
+			},
+			{
+				displayName: 'Return All',
+				name: 'returnAll',
+				type: 'boolean',
+				default: false,
+				description: 'Whether to return all results or only up to a given limit',
+				displayOptions: {
+					show: {
+						operation: ['list_team_members'],
+						resource: ['team'],
+					},
+				},
+			},
+			{
+				displayName: 'Limit',
+				name: 'limit',
+				type: 'number',
+				default: 50,
+				typeOptions: {
+					minValue: 1,
+					numberPrecision: 0,
+				},
+				description: 'Max number of results to return',
+				displayOptions: {
+					show: {
+						operation: ['list_team_members'],
+						resource: ['team'],
+						returnAll: [false],
+					},
+				},
+			},
 		],
 	};
+
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
 		return executeOperations(
 			this,

@@ -1,7 +1,11 @@
 {
 	"list_domains": {
 		"method": "GET",
-		"path": "/v1/domains"
+		"path": "/v1/domains",
+		"pagination": {
+			"items": ["domains"],
+			"kind": "complete"
+		}
 	},
 	"add_domain": {
 		"method": "POST",
@@ -41,7 +45,11 @@
 	},
 	"list_alerts": {
 		"method": "GET",
-		"path": "/v1/domains/:domainId/alerts"
+		"path": "/v1/domains/:domainId/alerts",
+		"pagination": {
+			"items": ["alerts"],
+			"kind": "complete"
+		}
 	},
 	"create_alert": {
 		"method": "POST",
@@ -61,7 +69,11 @@
 	},
 	"list_team_members": {
 		"method": "GET",
-		"path": "/v1/team"
+		"path": "/v1/team",
+		"pagination": {
+			"items": ["members"],
+			"kind": "complete"
+		}
 	},
 	"invite_team_member": {
 		"method": "POST",

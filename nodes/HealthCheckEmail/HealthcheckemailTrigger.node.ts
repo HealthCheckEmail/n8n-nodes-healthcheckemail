@@ -94,7 +94,7 @@ export class HealthCheckEmailTrigger implements INodeType {
 			},
 			{
 				displayName:
-					'Activating this workflow registers a signed webhook. Deactivating removes only its own subscription. A public HTTPS n8n webhook URL and an eligible product plan are required.',
+					'Activating this workflow registers a signed webhook. Deactivating removes only its own subscription.',
 				name: 'setup',
 				type: 'notice',
 				default: '',
