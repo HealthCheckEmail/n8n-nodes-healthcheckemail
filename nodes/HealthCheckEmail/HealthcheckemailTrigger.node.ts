@@ -49,7 +49,7 @@ async function api(
 		);
 	}
 }
-export class HealthCheckEmailTrigger implements INodeType {
+export class HealthcheckemailTrigger implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'HealthCheckEmail Trigger',
 		name: 'healthcheckemailTrigger',

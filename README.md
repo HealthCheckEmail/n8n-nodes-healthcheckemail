@@ -63,7 +63,7 @@ MIT license.
 
 The request origin and OAuth resource are the product API shown above. GET reads a resource, POST creates or runs the selected action, PATCH updates, and DELETE removes the selected owned resource. The node does not forward requests to a protocol server. Authentication, permissions and ownership are enforced before the API executes an operation.
 
-## Release checks (3.2.0)
+## Release checks (3.2.1)
 
 Resource and Operation definitions are explicit in the TypeScript node source. This minor update preserves API endpoints, credential types and operation identifiers. Every publication must pass Prettier, the official n8n node CLI linter with zero warnings, the runtime tests, and the n8n community package scanner against both TypeScript source and compiled JavaScript. GitHub Actions runs these checks before publishing with npm provenance.
 

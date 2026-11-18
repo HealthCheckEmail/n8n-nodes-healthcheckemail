@@ -435,3 +435,12 @@ test('list controls are resolved by n8n without exposed transport tokens', () =>
 		assert(!optional?.options.some((p) => ['offset', 'cursor', 'page'].includes(p.name)));
 	}
 });
+
+test('n8n can load every node and credential by its file name', () => {
+	for (const entry of [...pkg.n8n.nodes, ...pkg.n8n.credentials]) {
+		const className = path.basename(entry).split('.')[0];
+		const exported = require('../' + entry)[className];
+		assert.equal(typeof exported, 'function', `${entry} must export a class named ${className}`);
+		assert.ok(new exported());
+	}
+});
